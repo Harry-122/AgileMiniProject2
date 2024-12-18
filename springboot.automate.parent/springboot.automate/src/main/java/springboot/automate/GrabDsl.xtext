@@ -1,0 +1,9 @@
+grammar springboot.automate.GrabDsl with org.eclipse.xtext.common.Terminals
+
+generate grabDsl "http://www.automate.springboot/GrabDsl"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
