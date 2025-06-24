@@ -8,4 +8,229 @@
   <eClassifiers xsi:type="ecore:EClass" name="Greeting">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eSubpackages name="com" nsURI="http://www.automate.springboot/com" nsPrefix="com">
+    <eSubpackages name="project" nsURI="http://www.automate.springboot/com/project"
+        nsPrefix="com.project">
+      <eSubpackages name="config" nsURI="http://www.automate.springboot/com/project/config"
+          nsPrefix="com.project.config">
+        <eClassifiers xsi:type="ecore:EClass" name="AppConfig"/>
+      </eSubpackages>
+      <eSubpackages name="components" nsURI="http://www.automate.springboot/com/project/components"
+          nsPrefix="com.project.components">
+        <eClassifiers xsi:type="ecore:EClass" name="RequestProcessingLogger"/>
+      </eSubpackages>
+      <eSubpackages name="controller" nsURI="http://www.automate.springboot/com/project/controller"
+          nsPrefix="com.project.controller">
+        <eClassifiers xsi:type="ecore:EClass" name="UsersController">
+          <eOperations name="createUsers"/>
+          <eOperations name="updateUsers"/>
+          <eOperations name="deleteUser"/>
+          <eOperations name="getAllUsers"/>
+          <eOperations name="getUserByUsername"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="NewsfeedsController">
+          <eOperations name="createNewsfeed"/>
+          <eOperations name="getNewsfeedByUserId"/>
+          <eOperations name="updateNewsfeed"/>
+          <eOperations name="deleteNewsfeed"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="TweetController">
+          <eOperations name="createTweet"/>
+          <eOperations name="updateTweet"/>
+          <eOperations name="deleteTweet"/>
+          <eOperations name="getTweetById"/>
+          <eOperations name="getTweetsByUserId"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="SearchController">
+          <eOperations name="searchTweetsByKeyword"/>
+          <eOperations name="searchUsersByName"/>
+          <eOperations name="searchTrendingTopics"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="MediaController">
+          <eOperations name="uploadMedia"/>
+          <eOperations name="getMediaByUrl"/>
+          <eOperations name="deleteMedia"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="NotificationController">
+          <eOperations name="sendNotification"/>
+          <eOperations name="getNotificationsByUserId"/>
+          <eOperations name="deleteNotification"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="AnalyticsController">
+          <eOperations name="getUserAnalytics"/>
+          <eOperations name="getTweetAnalytics"/>
+          <eOperations name="getPlatformMetrics"/>
+        </eClassifiers>
+      </eSubpackages>
+      <eSubpackages name="dto" nsURI="http://www.automate.springboot/com/project/dto"
+          nsPrefix="com.project.dto">
+        <eClassifiers xsi:type="ecore:EClass" name="UsersDto">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="emailId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="dob" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdAt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="TweetsDto">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdAt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="FeedsDto">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="tweetId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="feedId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="FeedsTweetsDto">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="updatedAt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="FavoritesDto">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="tweetId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdAt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="FollowersDto">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="followerId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="followeeId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+        </eClassifiers>
+      </eSubpackages>
+      <eSubpackages name="entity" nsURI="http://www.automate.springboot/com/project/entity"
+          nsPrefix="com.project.entity">
+        <eClassifiers xsi:type="ecore:EClass" name="UsersEntity">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="emailId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="dob" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdAt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="hasmany" upperBound="-1"
+              eType="#//com/project/entity/TweetsEntity" containment="true"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="follows" upperBound="-1"
+              eType="#//com/project/entity/FollowersEntity"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="hasManyFeeds" upperBound="-1"
+              eType="#//com/project/entity/FeedsEntity" containment="true"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="favourites" upperBound="-1"
+              eType="#//com/project/entity/FavouritesEntity"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="TweetsEntity">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdAt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="isLinkedIn" upperBound="-1"
+              eType="#//com/project/entity/FeedsTweetsEntity"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="isFavouritedIn" upperBound="-1"
+              eType="#//com/project/entity/FavouritesEntity"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="FollowersEntity">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="followerId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="followeeId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="isFollowedBy" upperBound="-1"
+              eType="#//com/project/entity/UsersEntity"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="FeedsEntity">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="tweetId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="feedId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="contains" upperBound="-1"
+              eType="#//com/project/entity/FeedsTweetsEntity" containment="true"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="FavouritesEntity">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="tweetId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="FeedsTweetsEntity">
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+              iD="true"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="updatedAt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+        </eClassifiers>
+      </eSubpackages>
+      <eSubpackages name="service" nsURI="http://www.automate.springboot/com/project/service"
+          nsPrefix="com.project.service">
+        <eClassifiers xsi:type="ecore:EClass" name="UsersService">
+          <eOperations name="createUsers"/>
+          <eOperations name="updateUser"/>
+          <eOperations name="deleteUser"/>
+          <eOperations name="getAllUsers"/>
+          <eOperations name="getUserByUsername"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="NewsfeedsService">
+          <eOperations name="createNewsfeed"/>
+          <eOperations name="getNewsfeedByUserId"/>
+          <eOperations name="updateNewsfeed"/>
+          <eOperations name="deleteNewsfeed"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="TweetService">
+          <eOperations name="createTweet"/>
+          <eOperations name="updateTweet"/>
+          <eOperations name="deleteTweet"/>
+          <eOperations name="getTweetById"/>
+          <eOperations name="getTweetsByUserId"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="SearchService">
+          <eOperations name="searchTweetsByKeyword"/>
+          <eOperations name="searchUsersByName"/>
+          <eOperations name="searchTrendingTopics"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="MediaService">
+          <eOperations name="uploadMedia"/>
+          <eOperations name="getMediaByUrl"/>
+          <eOperations name="deleteMedia"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="NotificationService">
+          <eOperations name="sendNotification"/>
+          <eOperations name="getNotificationsByUserId"/>
+          <eOperations name="deleteNotification"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="AnalyticsService">
+          <eOperations name="getUserAnalytics"/>
+          <eOperations name="getTweetAnalytics"/>
+          <eOperations name="getPlatformMetrics"/>
+        </eClassifiers>
+      </eSubpackages>
+      <eSubpackages name="repository" nsURI="http://www.automate.springboot/com/project/repository"
+          nsPrefix="com.project.repository">
+        <eClassifiers xsi:type="ecore:EClass" name="UserRepository"/>
+        <eClassifiers xsi:type="ecore:EClass" name="TweetsRepository"/>
+        <eClassifiers xsi:type="ecore:EClass" name="FeedsRepository"/>
+        <eClassifiers xsi:type="ecore:EClass" name="FeedsTweetsRepository"/>
+        <eClassifiers xsi:type="ecore:EClass" name="FavouritesRepository"/>
+        <eClassifiers xsi:type="ecore:EClass" name="FollowersRepository"/>
+      </eSubpackages>
+      <eSubpackages name="exception" nsURI="http://www.automate.springboot/com/project/exception"
+          nsPrefix="com.project.exception">
+        <eClassifiers xsi:type="ecore:EClass" name="BadRequestExceptions"/>
+        <eClassifiers xsi:type="ecore:EClass" name="UsersNotFoundException"/>
+        <eClassifiers xsi:type="ecore:EClass" name="TweetsNotFoundException"/>
+        <eClassifiers xsi:type="ecore:EClass" name="FeedsTweetNotFoundException"/>
+        <eClassifiers xsi:type="ecore:EClass" name="FavouritesNotFoundException"/>
+        <eClassifiers xsi:type="ecore:EClass" name="FollowersNotFoundException"/>
+      </eSubpackages>
+      <eSubpackages name="interceptor" nsURI="http://www.automate.springboot/com/project/interceptor"
+          nsPrefix="com.project.interceptor">
+        <eClassifiers xsi:type="ecore:EClass" name="LoggingInterceptor"/>
+      </eSubpackages>
+    </eSubpackages>
+  </eSubpackages>
 </ecore:EPackage>

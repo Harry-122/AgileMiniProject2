@@ -18,7 +18,7 @@ subprojects {
 	apply plugin: 'groovy'
 	dependencies {
 		api platform("org.eclipse.xtext:xtext-dev-bom:${xtextVersion}")
-		api 'org.apache.groovy:groovy-all:4.0.15'
+		api 'org.apache.groovy:groovy-all:4.0.23'
 	}
 
 	apply plugin: 'org.xtext.xtend'
@@ -35,6 +35,10 @@ subprojects {
 
 	configurations.all {
 		exclude group: 'asm'
+		resolutionStrategy {
+			force 'org.apache.groovy:groovy-swing:4.0.23'
+			force 'org.apache.groovy:groovy-all:4.0.23'
+		}
 	}
 	
 	sourceSets {

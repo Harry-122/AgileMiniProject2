@@ -3,6 +3,14 @@
  */
 package springboot.automate;
 
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.resource.XtextResourceFactory;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import springboot.automate.grabDsl.GrabDslPackage;
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
@@ -12,4 +20,18 @@ public class GrabDslStandaloneSetup extends GrabDslStandaloneSetupGenerated {
 	public static void doSetup() {
 		new GrabDslStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
+	
+	@Override
+    public Injector createInjector() {
+        return Guice.createInjector(new GrabDslRuntimeModule());
+    }
+	
+	@Override
+    public void register(Injector injector) {
+        if (!EPackage.Registry.INSTANCE.containsKey("http://www.automate.springboot/GrabDsl")) {
+            EPackage.Registry.INSTANCE.put("http://www.automate.springboot/GrabDsl", GrabDslPackage.eINSTANCE);
+        }
+        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap()
+            .put("dmodel", injector.getInstance(XtextResourceFactory.class));
+    }
 }

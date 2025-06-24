@@ -19,6 +19,7 @@ class GrabDslParsingTest {
 	ParseHelper<Model> parseHelper
 	
 	@Test
+	@Deprecated
 	def void loadModel() {
 		val result = parseHelper.parse('''
 			Hello Xtext!

@@ -1,0 +1,476 @@
+package com.project {
+	pomXml {
+        groupId = "com.project"
+        artifactId = "springboot-application"
+        version = "1.0.0"
+        packaging = "jar"
+
+        properties {
+            javaVersion = "1.8"
+            springBootVersion = "2.7.5"
+        }
+
+        dependencies {
+	        dependency {
+	            groupId = "org.springframework.boot"
+	            artifactId = "spring-boot-starter-web"
+	            version = "2.5.6"
+	            scope = "compile"
+	        }
+	        
+	        dependency {
+	            groupId = "org.projectlombok"
+	            artifactId = "lombok"
+	            version = "1.18.32"
+	            scope = "compile"            
+	        }
+	        
+            dependency {
+	            groupId = "org.springframework.boot"
+	            artifactId = "spring-boot-starter-data-jpa"
+	            version = "2.5.6"
+	            scope = "compile"
+        	}
+        
+	        dependency {
+	            groupId = "org.springframework.boot"
+	            artifactId = "spring-boot-starter-validation"
+	            version = "2.5.6"
+	            scope = "compile"
+	        }
+	        
+	        dependency {
+	            groupId = "io.github.rieske.dbtest"
+	            artifactId = "h2"
+	            version = "0.0.5"
+	            scope = "runtime"
+	        }
+	        
+	        dependency {
+	            groupId = "com.fasterxml.jackson.core"
+	            artifactId = "jackson-annotations"
+	            version = "2.15.1"
+	        }
+	        
+	        dependency {
+	            groupId = "org.hibernate"
+	            artifactId = "hibernate-core"
+	            version = "5.4.32.Final"
+	        }
+	        
+	        dependency {
+	            groupId = "org.modelmapper"
+	            artifactId = "modelmapper"
+	            version = "3.1.1"
+	        }
+	        
+	        dependency {
+	            groupId = "com.fasterxml.jackson.core"
+	            artifactId = "jackson-databind"
+	            version = "2.13.4.2"
+	        }
+	        
+	        dependency {
+	            groupId = "javax.xml.bind"
+	            artifactId = "jaxb-api"
+	            version = "2.3.1"
+	        }
+	        
+	        dependency {
+	            groupId = "jakarta.persistence"
+	            artifactId = "jakarta.persistence-api"
+	            version = "2.2.3"
+	        }
+	        
+	        dependency {
+	            groupId = "io.springfox"
+	            artifactId = "springfox-swagger2"
+	            version = "3.0.0"
+	        }
+	        
+	        dependency {
+	            groupId = "io.springfox"
+	            artifactId = "springfox-boot-starter"
+	            version = "3.0.0"
+	        }
+	        
+	        dependency {
+	            groupId = "io.springfox"
+	            artifactId = "springfox-swagger-ui"
+	            version = "3.0.0"
+	        }
+        }
+        
+        build {
+            plugins {
+                plugin {
+                    groupId = "org.apache.maven.plugins"
+                    artifactId = "maven-compiler-plugin"
+                    version = "3.8.1"
+                    configuration {
+                        source = "${java.version}"
+                        target = "${java.version}"
+                    }
+                }
+            }
+        }
+    }
+    
+    package dto {
+        @Data
+        @NoArgsConstructor
+        @AllArgsConstructor
+        class UsersDto {
+       
+            private id: UUID
+           
+            private emailId: String
+           
+            private username: String
+           
+            private password: String
+           
+            private dob: Date
+           
+            private createdAt: Timestamp
+        }
+        
+        @Data
+        @NoArgsConstructor
+        @AllArgsConstructor
+        class TweetsDto {
+       		private id: UUID
+       		
+       		private tweetId: String
+       		
+       		private userId: String
+       		
+       		private posts: List<TweetsCommentDto>
+       		
+       		private createdAt: Timestamp
+        }
+        
+        @Data
+        @NoArgsConstructor
+        @AllArgsConstructor
+        class TweetsCommentDto {
+       		private id: UUID
+       		
+       		private post: String
+        }
+        
+        @Data
+        @NoArgsConstructor
+        @AllArgsConstructor
+        class FeedsTweetDto {
+        	private id: UUID
+       		
+       		private userId: String
+       		
+       		private posts: List<TweetsCommentDto>
+       		
+       		private createdAt: Timestamp
+        }
+        
+        @Data
+        @NoArgsConstructor
+        @AllArgsConstructor
+        class MessageDto {
+        	private responseStatusCode: HttpStatus
+        	
+        	private responseMessage: String
+        }
+    }
+    
+    package serviceInterface {
+    	interface IUsersService {
+           
+            public createUsers(userDto: UsersDto): UsersDto
+           
+            public updateUser(userId: UUID, userDto: UsersDto): UsersDto
+           
+            public deleteUser(userId: UUID): void
+           
+            public getAllUsers(): List<UsersDto>
+           
+            public getUserByUsername(username: String): UsersDto
+           
+        }
+        
+        interface INewfeedsService {
+        	public createNewsFeeds(feedsTweetDto: FeedsTweetDto): FeedsTweetDto
+           
+            public updateNewsFeeds(feedId: UUID, feedsTweetDto: FeedsTweetDto): FeedsTweetDto
+           
+            public deleteNewFeed(feedId: UUID): void
+           
+            public getAllTweets(): List<FeedsTweetDto>
+           
+            public getNewsFeedById(userId: UUID): FeedsTweetDto
+        }
+        
+        interface ITweetService {
+           public createTweet(tweetsDto: TweetsDto): TweetsDto
+           
+           public updateTweet(tweetId: UUID, tweetsDto: TweetsDto): TweetsDto
+           
+           public deleteTweetById(tweedId: UUID): void
+           
+           public getAllTweets(): List<TweetsDto>
+           
+           public getTweetById(tweetId: UUID): TweetsDto
+        }
+    }
+    
+    package controller {
+        @RestController
+		@RequestMapping(path = "/api/users")
+        class UsersController {
+        
+            @Autowired
+            private iUsersService: IUsersService
+
+            @RequestMapping(method = "POST")
+            public createUsers(userDto: UsersDto): ResponseEntity<MessageDto>
+
+            @RequestMapping(method = "PUT")
+            public updateUser(userId: UUID, userDto: UsersDto): ResponseEntity<MessageDto>
+            
+            @RequestMapping(method = "PUT")
+            public updateUserName(userId: UUID, name: String): ResponseEntity<MessageDto>
+
+            @RequestMapping(method = "DELETE")
+            public deleteUser(userId: UUID): void
+
+            @RequestMapping(method = "GET")
+            public getAllUsers(): List<UsersDto>
+
+            @RequestMapping(method = "GET")
+            public getUserByUsername(username: String): UsersDto
+        }
+        
+        @RestController
+        @RequestMapping(path = "/api/feeds")
+        class NewfeedsController {
+        
+            @Autowired
+            private iNewfeedsService: INewfeedsService
+
+            @RequestMapping(method = "POST")
+            public createNewsFeeds(feedsTweetDto: FeedsTweetDto): ResponseEntity<MessageDto>
+
+            @RequestMapping(method = "PUT")
+            public updateNewsFeeds(userId: UUID, feedsTweetDto: FeedsTweetDto): ResponseEntity<MessageDto>
+            
+            @RequestMapping(method = "DELETE")
+            public deleteNewFeed(userId: UUID, name: String): ResponseEntity<MessageDto>
+
+            @RequestMapping(method = "GET")
+            public getAllTweets(): List<FeedsTweetDto>
+
+            @RequestMapping(method = "GET")
+            public getNewsFeedById(userId: UUID): FeedsTweetDto
+        }
+        
+        @RestController
+        @RequestMapping(path = "/api/tweets")
+        class TweetController {
+        
+            @Autowired
+            private iNewfeedsService: INewfeedsService
+
+            @RequestMapping(method = "POST")
+            public createTweet(tweetsDto: TweetsDto): ResponseEntity<MessageDto>
+
+            @RequestMapping(method = "PUT")
+            public updateTweet(userId: UUID, tweetsDto: TweetsDto): ResponseEntity<MessageDto>
+            
+            @RequestMapping(method = "DELETE")
+            public deleteTweetById(tweedId: UUID): ResponseEntity<MessageDto>
+
+            @RequestMapping(method = "GET")
+            public getAllTweets(): List<TweetsDto>
+
+            @RequestMapping(method = "GET")
+            public getTweetById(tweetId: UUID): TweetsDto
+        }
+    }
+    
+    package entity {
+
+	    @Entity
+	    @Table(name = "users")
+	    class UsersEntity {
+	
+	        @Id
+	        private id: UUID
+	
+	        @Column(name = "email_id")
+	        private emailId: String
+	
+	        @Column(name = "username")
+	        private username: String
+	
+	        @Column(name = "password")
+	        private password: String
+	
+	        @Column(name = "dob")
+	        private dob: Date
+	
+	        @Column(name = "created_at")
+	        private createdAt: Timestamp
+	
+	        @OneToMany(mappedBy = "users")
+	        private tweets: List<TweetsEntity>
+	    }
+	
+	    @Entity
+	    @Table(name = "tweets")
+	    class TweetsEntity {
+	
+	        @Id
+	        private id: UUID
+	
+	        @Column(name = "tweet_id")
+	        private tweetId: String
+	
+	        @ManyToOne
+	        @JoinColumn(name = "user_id")
+	        private user: UsersEntity
+	
+	        @OneToMany(mappedBy = "tweets")
+	        private posts: List<TweetsCommentEntity>
+	
+	        @Column(name = "created_at")
+	        private createdAt: Timestamp
+	    }
+	
+	    @Entity
+	    @Table(name = "tweets_comments")
+	    class TweetsCommentEntity {
+	
+	        @Id
+	        private id: UUID
+	
+	        @Column(name = "post")
+	        private post: String
+	
+	        @ManyToOne
+	        @JoinColumn(name = "tweet_id")
+	        private tweet: TweetsEntity
+	    }
+	
+	    @Entity
+	    @Table(name = "feeds_tweets")
+	    class FeedsTweetEntity {
+	
+	        @Id
+	        private id: UUID
+	
+	        @Column(name = "user_id")
+	        private userId: String
+	
+	        @OneToMany(mappedBy = "feedTweet")
+	        private posts: List<TweetsCommentEntity>
+	
+	        @Column(name = "created_at")
+	        private createdAt: Timestamp
+	    }
+	}
+	
+	package repository {
+
+	    @Repository
+	    interface UsersRepository extends <UsersEntity, UUID> {
+	        public findByUsername(username: String): Optional<UsersEntity>
+	        public findAllUsers(): List<UsersEntity>
+	    }
+	
+	    @Repository
+	    interface TweetsRepository extends <TweetsEntity, UUID> {
+	        public findByTweetId(tweetId: String): Optional<TweetsEntity>
+	        public findAllTweets(): List<TweetsEntity>
+	    }
+	
+	    @Repository
+	    interface TweetsCommentRepository extends <TweetsCommentEntity, UUID> {
+	        public findByTweetId(tweetId: UUID): List<TweetsCommentEntity>
+	    }
+	
+	    @Repository
+	    interface FeedsTweetRepository extends <FeedsTweetEntity, UUID> {
+	        public findByUserId(userId: String): List<FeedsTweetEntity>
+	        public findAllFeeds(): List<FeedsTweetEntity>
+	    }
+	}
+	
+	
+	package service {
+
+	    @Service
+	    class UsersService implements IUsersService {
+	    
+	    	@Autowired
+            private usersRepository: UsersRepository
+	
+	        @Override
+	        public createUsers(userDto: UsersDto): UsersDto
+	
+	        @Override
+	        public updateUser(userId: UUID, userDto: UsersDto): UsersDto
+	
+	        @Override
+	        public deleteUser(userId: UUID): void
+	
+	        @Override
+	        public getAllUsers(): List<UsersDto>
+	
+	        @Override
+	        public getUserByUsername(username: String): UsersDto
+	    }
+	
+	    @Service
+	    class NewsFeedsService implements INewfeedsService {
+	    
+	    	@Autowired
+            private feedsTweetRepository: FeedsTweetRepository
+	
+	        @Override
+	        public createNewsFeeds(feedsTweetDto: FeedsTweetDto): FeedsTweetDto
+	
+	        @Override
+	        public updateNewsFeeds(feedId: UUID, feedsTweetDto: FeedsTweetDto): FeedsTweetDto
+	
+	        @Override
+	        public deleteNewFeed(feedId: UUID): void
+	
+	        @Override
+	        public getAllTweets(): List<FeedsTweetDto>
+	
+	        @Override
+	        public getNewsFeedById(userId: UUID): FeedsTweetDto
+	    }
+	
+	    @Service
+	    class TweetService implements ITweetService {
+	    
+	    	@Autowired
+	    	private tweetsRepository: TweetsRepository
+	
+	        @Override
+	        public createTweet(tweetsDto: TweetsDto): TweetsDto
+	
+	        @Override
+	        public updateTweet(tweetId: UUID, tweetsDto: TweetsDto): TweetsDto
+	
+	        @Override
+	        public deleteTweetById(tweedId: UUID): void
+	
+	        @Override
+	        public getAllTweets(): List<TweetsDto>
+	
+	        @Override
+	        public getTweetById(tweetId: UUID): TweetsDto
+	    }
+	}
+}

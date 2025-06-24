@@ -2,8 +2,130 @@ grammar springboot.automate.GrabDsl with org.eclipse.xtext.common.Terminals
 
 generate grabDsl "http://www.automate.springboot/GrabDsl"
 
+// Entry point for the grammar
 Model:
-	greetings+=Greeting*;
-	
-Greeting:
-	'Hello' name=ID '!';
+    'package' packageName=QualifiedName '{'
+    	pomXml=PomXml
+        packages+=PackageDefinition*
+    '}';
+
+PackageDefinition:
+    annotations+=Annotation*
+    'package' packageName=QualifiedName '{'
+        classes+=ClassDefinition*
+        interfaces+=InterfaceDefinition*
+    '}';
+
+ClassDefinition:
+    annotations+=Annotation*
+    'class' name=ID 
+    ('implements' interface=QualifiedName)? // Implementing an interface
+    '{'
+        members+=MemberDefinition*
+    '}';
+
+InterfaceDefinition:
+    annotations+=Annotation*
+    'interface' name=ID 
+    ('extends' interface=EntityType)? // Implementing an interface
+    '{'
+        members+=MemberDefinition*
+    '}';
+
+MemberDefinition:
+    (method=MethodDefinition | property=PropertyDefinition);
+
+MethodDefinition:
+    annotations+=Annotation*
+    visibility=VisibilityModifier? // Optional visibility
+    name=ID '('
+        (parameters+=ParameterDefinition (',' parameters+=ParameterDefinition)*)? // Parameter list
+    ')'
+    ':' returnType=Type ';'; // Return type
+
+PropertyDefinition:
+    annotations+=Annotation*
+    visibility=VisibilityModifier? // Optional visibility
+    name=ID ':' type=Type ('=' defaultValue=STRING)?; // Property type
+
+ParameterDefinition:
+    name=ID ':' type=Type ('=' defaultValue=STRING)?; // Parameter name and type
+
+Annotation:
+    '@' name=ID ('(' (arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)*)? ')')?;
+
+AnnotationArgument:
+    name=ID '=' value=(STRING | BooleanLiteral | QualifiedName);
+
+BooleanLiteral:
+    'true' | 'false';
+
+VisibilityModifier:
+    'public' | 'private' | 'protected'; // Direct keywords
+
+Type:
+    PrimitiveType | QualifiedName | GenericType; // Types can be primitive or qualified names
+
+PrimitiveType:
+    'void' | 'String' | 'double' | 'float' | 'int' | 'UUID' | 'Date' | 'Timestamp' | 'List' | 'Optional';
+
+QualifiedName:
+    ID ('.' ID)*; // Fully qualified names (e.g., com.example)
+
+GenericType:
+    (QualifiedName | PrimitiveType) '<' Type '>';
+
+EntityType:
+    '<' entity=Type ',' key=Type '>';
+
+PomXml:
+    'pomXml' '{'
+        'groupId' '=' groupId=STRING
+        'artifactId' '=' artifactId=STRING
+        'version' '=' version=STRING
+        'packaging' '=' packaging=STRING
+        properties=Properties
+        dependencies=Dependencies
+        build=Build
+    '}';
+
+Properties:
+    'properties' '{'
+        'javaVersion' '=' javaVersion=STRING
+        'springBootVersion' '=' springBootVersion=STRING
+    '}';
+
+Dependencies:
+    {Dependencies} 'dependencies' '{'
+        dependencies+=Dependency*
+    '}';
+
+Dependency:
+    'dependency' '{'
+        'groupId' '=' groupId=STRING
+        'artifactId' '=' artifactId=STRING
+        ('version' '=' version=STRING)?
+        ('scope' '=' scope=STRING)?
+    '}';
+
+Build:
+    {Build} 'build' '{'
+        'plugins' '{'
+            plugins+=Plugin*
+        '}'
+    '}';
+
+Plugin:
+    'plugin' '{'
+        'groupId' '=' groupId=STRING
+        'artifactId' '=' artifactId=STRING
+        'version' '=' version=STRING
+        configuration=Configuration
+    '}';
+    
+Configuration:
+	'configuration' '{'
+            'source' '=' source=STRING
+            'target' '=' target=STRING
+        '}'
+;

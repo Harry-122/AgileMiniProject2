@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<d:Model xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:d="domainmodel"
+    xsi:schemaLocation="domainmodel DomainModel.ecore">
+  <pomXml groupId="com.project"
+      artifactId="springboot-application"
+      version="1.0.0"
+      packaging="jar"/>
+  <packages
+      packageName="com.project.controller">
+    <classes
+        name="UsersController"/>
+  </packages>
+  <packages
+      packageName="com.project.entity">
+    <classes
+        name="UsersEntity"/>
+  </packages>
+</d:Model>
